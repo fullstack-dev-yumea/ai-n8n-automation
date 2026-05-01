@@ -19,8 +19,10 @@
   // Runs inside the dev container on every start/resume.
   "postStartCommand": "bash .devcontainer/postStart.sh",
 
-  // Forward ports from named services using "serviceName:port" syntax.
-  "forwardPorts": ["n8n:5678", "ollama:11434", "searxng:8080"],
+  // Ports are mapped to the host via docker-compose ports: directives.
+  // Using plain integers here is the most reliable approach for Docker Compose
+  // setups — VS Code detects them as soon as the containers bind the ports.
+  "forwardPorts": [5678, 11434, 8080],
 
   "portsAttributes": {
     "5678": {

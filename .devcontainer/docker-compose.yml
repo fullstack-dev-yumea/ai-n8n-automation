@@ -21,6 +21,8 @@ services:
   ollama:
     image: ollama/ollama:latest
     restart: unless-stopped
+    ports:
+      - "11434:11434"
     volumes:
       # Models are stored in a named volume so they survive container restarts
       # and codespace suspensions (but NOT codespace deletion).
@@ -52,6 +54,8 @@ services:
   searxng:
     image: searxng/searxng:latest
     restart: unless-stopped
+    ports:
+      - "8080:8080"
     volumes:
       # settings.yml (generated, gitignored) + limiter.toml + uwsgi.ini (committed)
       - ./searxng:/etc/searxng
@@ -72,6 +76,8 @@ services:
   n8n:
     image: docker.n8n.io/n8nio/n8n:latest
     restart: unless-stopped
+    ports:
+      - "5678:5678"
     # Run as uid 1000 (node) — matches the workspace owner uid in Codespaces
     # so n8n can read/write the mounted n8n-data directory.
     user: "1000:1000"
