@@ -1,0 +1,47 @@
+{
+  "name": "AI Automation Stack",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+  "hostRequirements": {
+    "memory": "8gb",
+    "cpus": 4
+  },
+
+  // Runs on the Codespaces host VM BEFORE containers start.
+  // Generates .devcontainer/.env and searxng/settings.yml (both gitignored).
+  "initializeCommand": "bash .devcontainer/initializeCommand.sh",
+
+  // Runs once inside the dev container after first creation.
+  "postCreateCommand": "bash .devcontainer/postCreate.sh",
+
+  // Runs inside the dev container on every start/resume.
+  "postStartCommand": "bash .devcontainer/postStart.sh",
+
+  // Forward ports from named services using "serviceName:port" syntax.
+  "forwardPorts": ["n8n:5678", "ollama:11434", "searxng:8080"],
+
+  "portsAttributes": {
+    "5678": {
+      "label": "n8n UI",
+      "onAutoForward": "notify"
+    },
+    "11434": {
+      "label": "Ollama API",
+      "onAutoForward": "silent"
+    },
+    "8080": {
+      "label": "SearXNG",
+      "onAutoForward": "silent"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  }
+}
